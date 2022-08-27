@@ -1,15 +1,10 @@
-import Greetings from '../Greetings/Greetings';
-import Time from '../Time/Time';
+import { Greetings } from '../Greetings/Greetings';
 import HeaderCSS from './Header.module.css';
 
-function Header ({name}){
+export function Header ({name}){
 
-    return <header className={HeaderCSS.header}>
-    My first react App
-    <Greetings name={name} />
-    <Time />
-  </header>;
-
+    return  <header className={HeaderCSS.header}>
+              My first react App
+              <Greetings name={name} />
+            </header>;
 }
-
-export default Header;

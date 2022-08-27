@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
-
-function Time(){
+export function Time(){
 
     const [timer, setTime] = useState(new Date());
 
@@ -12,8 +11,5 @@ function Time(){
         return () => clearInterval(id);
       }, []);
 
-    return <div>Current time - {timer.toLocaleTimeString()}</div>
+    return <div>Current time - { timer.toLocaleTimeString() }</div>
 }
-
-
-export default Time;
