@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
 
-export function Time(){
+export function Time() {
+  const [timer, setTime] = useState(new Date());
 
-    const [timer, setTime] = useState(new Date());
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
 
-    useEffect(() => {
-        const id = setInterval(() => {
-            setTime(new Date());
-        }, 1000);
-        return () => clearInterval(id);
-      }, []);
-
-    return <div>Current time - { timer.toLocaleTimeString() }</div>
+  return <div>Current time - {timer.toLocaleTimeString()}</div>;
 }

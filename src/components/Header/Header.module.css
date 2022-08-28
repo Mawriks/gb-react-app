@@ -1,5 +1,5 @@
 .header {
-    min-height: 50vh;
+    min-height: 20vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,3 +7,6 @@
     font-size: calc(10px + 2vmin);
 }
 
+.header h3 {
+    margin-bottom: 0;
+}

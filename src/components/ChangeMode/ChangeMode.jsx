@@ -1,4 +1,3 @@
-export function ChangeMode ({ mode, modeSetter }){
-
-    return <button onClick={ modeSetter }>{ mode ? 'Light Mode' : 'Dark Mode' }</button>;
-}
+export const ChangeMode = ({ mode, modeSetter }) => (
+  <button onClick={modeSetter}>{mode ? 'Light Mode' : 'Dark Mode'}</button>
+);
