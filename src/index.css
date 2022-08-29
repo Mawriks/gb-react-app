@@ -7,7 +7,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+*{
+  box-sizing: border-box;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+form button{
+  height: 40px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+form input{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+button{
+  background-color: #ddd;
+  border:1px solid #ddd;
+  border-radius: 2px;
+  color: #000;
+  cursor: pointer;
+}
+
+h3{
+  padding: 0px 10px;
+}
+
+input {
+  height: 40px;
+  border-radius: 3px;
+  border:1px solid #ddd;
+  padding: 5px 10px;
+}
+
+ul{
+  padding:0;
+  list-style-type: none
 }
