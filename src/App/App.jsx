@@ -12,7 +12,6 @@ export function App() {
   const [name, setName] = useState('Max');
   const [mode, setMode] = useState(true);
   const [messages, setMessages] = useState([]);
-  const [sended, setSended] = useState(false);
 
   const changeName = (name) => {
     setName(name);
@@ -29,21 +28,15 @@ export function App() {
     ]);
   };
 
-  const messageSended = () => {
-    setSended((prev) => !prev);
-  };
-
   useEffect(() => {
     let id;
-    if (sended) {
+    if (messages.length > 0 && messages[messages.length - 1].author === name) {
       id = setTimeout(() => {
         addMessage(botAnswer, 'Bot');
-        messageSended();
       }, 1500);
     }
-
     return () => clearTimeout(id);
-  }, [sended]);
+  }, [messages]);
 
   return (
     <div className={`App ${mode ? 'app-dark' : 'app-light'}`}>
@@ -53,11 +46,7 @@ export function App() {
       <br />
       <hr />
       <br />
-      <AddMessage
-        messageSetter={addMessage}
-        messageSend={messageSended}
-        author={name}
-      />
+      <AddMessage messageSetter={addMessage} author={name} />
       <MessagesList messageList={messages} />
     </div>
   );

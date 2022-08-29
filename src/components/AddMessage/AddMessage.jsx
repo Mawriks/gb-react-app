@@ -1,9 +1,8 @@
-export function AddMessage({ messageSetter, messageSend, author }) {
+export function AddMessage({ messageSetter, author }) {
   const addMessageHandler = (e) => {
     e.preventDefault();
     messageSetter(e.target.message.value, author);
     e.target.message.value = '';
-    messageSend();
   };
 
   return (
