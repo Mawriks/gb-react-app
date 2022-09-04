@@ -1,4 +1,4 @@
-import { Greetings } from '../Greetings/Greetings';
+import { Greetings } from './components/Greetings';
 import HeaderCSS from './Header.module.css';
 
 export const Header = ({ name }) => (

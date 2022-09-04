@@ -3,13 +3,14 @@ const nameError = 'Fill the name field!';
 export function ChangeName({ nameSetter }) {
   const changeNameHandler = (e) => {
     e.preventDefault();
-    if (e.target.name.value) {
-      nameSetter(e.target.name.value);
+    const { name } = e.target.elements;
+    if (name.value) {
+      nameSetter(name.value);
       if (e.target.lastChild.classList.contains('message')) {
         e.target.lastChild.remove();
       }
     } else {
-      e.target.name.style.borderColor = 'red';
+      name.style.borderColor = 'red';
       if (!e.target.lastChild.classList.contains('message')) {
         e.target.insertAdjacentHTML(
           'beforeend',
@@ -17,11 +18,11 @@ export function ChangeName({ nameSetter }) {
         );
       }
     }
-    e.target.name.value = '';
+    name.value = '';
   };
 
   return (
-    <form onSubmit={changeNameHandler}>
+    <form data-testid="form" onSubmit={changeNameHandler}>
       <h3>Whant to change your name?</h3>
       <input type="text" name="name" placeholder="Your new name" />
       <button>Change</button>
