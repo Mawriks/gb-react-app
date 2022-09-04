@@ -1,12 +1,13 @@
 export function AddMessage({ messageSetter, author }) {
   const addMessageHandler = (e) => {
     e.preventDefault();
-    messageSetter(e.target.message.value, author);
-    e.target.message.value = '';
+    const { message } = e.target.elements;
+    messageSetter(message.value, author);
+    message.value = '';
   };
 
   return (
-    <form onSubmit={addMessageHandler}>
+    <form data-testid="addmessage" onSubmit={addMessageHandler}>
       <h3>Hey, send your message!</h3>
       <input type="text" name="message" placeholder="Type your message" />
       <button>Send</button>

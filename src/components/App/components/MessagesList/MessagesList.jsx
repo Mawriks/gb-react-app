@@ -1,5 +1,5 @@
 export const MessagesList = ({ messageList }) => (
-  <ul>
+  <ul data-testid="messagelist">
     {messageList.map((message, index) => (
       <li key={index}>
         {message.author}: {message.text}

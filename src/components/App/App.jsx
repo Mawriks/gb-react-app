@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { AddMessage } from '../components/AddMessage/AddMessage';
-import { ChangeMode } from '../components/ChangeMode/ChangeMode';
-import { ChangeName } from '../components/ChangeName/ChangeName';
-import { Header } from '../components/Header/Header';
-import { MessagesList } from '../components/MessagesList/MessagesList';
+import { AddMessage } from './components/AddMessage';
+import { ChangeMode } from './components/ChangeMode';
+import { ChangeName } from './components/ChangeName';
+import { Header } from './components/Header';
+import { Time } from './components/Time';
+import { MessagesList } from './components/MessagesList';
 import './App.css';
 
 const botAnswer = 'Hey, my name is Bot! I can type this message!';
@@ -36,11 +37,12 @@ export function App() {
       }, 1500);
     }
     return () => clearTimeout(id);
-  }, [messages]);
+  }, [messages, name]);
 
   return (
-    <div className={`App ${mode ? 'app-dark' : 'app-light'}`}>
+    <div data-testid="app" className={`App ${mode ? 'app-dark' : 'app-light'}`}>
       <ChangeMode mode={mode} modeSetter={changeMode} />
+      <Time />
       <Header name={name} />
       <ChangeName nameSetter={changeName} />
       <br />
