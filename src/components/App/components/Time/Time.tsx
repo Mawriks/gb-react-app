@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export function Time() {
-  const [timer, setTime] = useState(new Date());
+  const [timer, setTime] = useState<Date>(new Date());
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -10,5 +10,10 @@ export function Time() {
     return () => clearInterval(id);
   }, []);
 
-  return <div>Current time - {timer.toLocaleTimeString()}</div>;
+  return (
+    <div>
+      <br />
+      Current time - {timer.toLocaleTimeString()}
+    </div>
+  );
 }

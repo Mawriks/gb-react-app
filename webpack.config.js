@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const withReport = process.env.npm_config_withReport;
@@ -21,15 +22,16 @@ module.exports = {
     process.env.NODE_ENV === 'production'
       ? 'hidden-source-map'
       : 'eval-source-map',
-  entry: path.resolve(__dirname, './src/index.jsx'),
+  entry: path.resolve(__dirname, './src/index.tsx'),
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   module: {
     rules: [
       {
         exclude: /node_modules/,
-        test: /\.jsx?$/,
+        test: /\.(t|j)sx?$/,
         use: ['babel-loader'],
       },
+      // { test: /\.tsx?$/, loader: 'ts-loader' },
       {
         exclude: /\.module\.s?css$/i,
         test: /\.s?css$/i,
@@ -105,6 +107,7 @@ module.exports = {
           }),
         ]),
     ...(withReport ? new BundleAnalyzerPlugin() : ''),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   resolve: {
     alias: {
@@ -113,6 +116,6 @@ module.exports = {
       store: path.resolve(__dirname, 'src/store'),
       svg: path.resolve(__dirname, 'src/assets/svg'),
     },
-    extensions: ['.jsx', '.js'],
+    extensions: ['.jsx', '.js', '.tsx', '.ts'],
   },
 };

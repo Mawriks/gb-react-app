@@ -1,11 +1,9 @@
 import { App } from './App';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent, act, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-//import { ChangeMode } from './components/ChangeMode';
-
 describe('App', () => {
-  let app;
+  let app: RenderResult;
 
   beforeEach(() => {
     jest.useFakeTimers();
@@ -17,9 +15,9 @@ describe('App', () => {
   });
 
   it('App testing changeMode', () => {
-    expect(app.getByTestId('app')).toHaveClass('app-dark');
-    fireEvent.click(app.getByTestId('btn'));
     expect(app.getByTestId('app')).toHaveClass('app-light');
+    fireEvent.click(app.getByTestId('btn'));
+    expect(app.getByTestId('app')).toHaveClass('app-dark');
   });
 
   it('App testing changeName funct', () => {

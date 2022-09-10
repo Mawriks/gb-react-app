@@ -18,3 +18,16 @@
   background-color: white;
   color: #282c34;
 }
+
+.App .MuiFilledInput-root{
+  border-top-right-radius: 0px;
+}
+
+.App.app-dark .MuiFilledInput-root{
+  background-color: white
+}
+.App .MuiButtonBase-root:not(.MuiButton-sizeSmall){
+  height: 47px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}

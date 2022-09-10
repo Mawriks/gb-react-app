@@ -1,9 +1,9 @@
 import { ChangeName } from './ChangeName';
-import { render, fireEvent } from '@testing-library/react';
-//import userEvent from '@testing-library/user-event';
+import { render, fireEvent, RenderResult } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('ChangeName', () => {
-  let app, setterName;
+  let app: RenderResult, setterName: jest.Mock;
 
   beforeEach(() => {
     setterName = jest.fn();
@@ -14,19 +14,19 @@ describe('ChangeName', () => {
     fireEvent.change(app.getByPlaceholderText('Your new name'), {
       target: { value: '2223' },
     });
-    expect(app.getByPlaceholderText('Your new name').value).toBe('2223');
+    expect(app.getByPlaceholderText('Your new name')).toHaveValue('2223');
 
-    fireEvent.click(app.getByText('Change'));
+    fireEvent.click(app.getByTestId('mui-btn'));
 
-    expect(app.getByPlaceholderText('Your new name').value).toBe('');
+    expect(app.getByPlaceholderText('Your new name')).toHaveValue('');
 
     expect(setterName).toHaveBeenCalledTimes(1);
   });
 
   it('expect setterName no call and set ERROR message and remove ERROR', () => {
-    fireEvent.click(app.getByText('Change'));
+    fireEvent.click(app.getByTestId('mui-btn'));
 
-    expect(app.getByPlaceholderText('Your new name').value).toBe('');
+    expect(app.getByPlaceholderText('Your new name')).toHaveValue('');
 
     expect(setterName).toHaveBeenCalledTimes(0);
 
@@ -36,7 +36,7 @@ describe('ChangeName', () => {
       target: { value: '2223' },
     });
 
-    fireEvent.click(app.getByText('Change'));
+    fireEvent.click(app.getByTestId('mui-btn'));
 
     expect(app.queryByText('Fill the name field!')).not.toBeInTheDocument;
   });
