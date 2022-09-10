@@ -1,8 +1,9 @@
 import { ChangeName } from './ChangeName';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, RenderResult } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('ChangeName', () => {
-  let app: any, setterName: jest.Mock;
+  let app: RenderResult, setterName: jest.Mock;
 
   beforeEach(() => {
     setterName = jest.fn();
@@ -13,11 +14,11 @@ describe('ChangeName', () => {
     fireEvent.change(app.getByPlaceholderText('Your new name'), {
       target: { value: '2223' },
     });
-    expect(app.getByPlaceholderText('Your new name').value).toBe('2223');
+    expect(app.getByPlaceholderText('Your new name')).toHaveValue('2223');
 
     fireEvent.click(app.getByTestId('mui-btn'));
 
-    expect(app.getByPlaceholderText('Your new name').value).toBe('');
+    expect(app.getByPlaceholderText('Your new name')).toHaveValue('');
 
     expect(setterName).toHaveBeenCalledTimes(1);
   });
@@ -25,7 +26,7 @@ describe('ChangeName', () => {
   it('expect setterName no call and set ERROR message and remove ERROR', () => {
     fireEvent.click(app.getByTestId('mui-btn'));
 
-    expect(app.getByPlaceholderText('Your new name').value).toBe('');
+    expect(app.getByPlaceholderText('Your new name')).toHaveValue('');
 
     expect(setterName).toHaveBeenCalledTimes(0);
 

@@ -1,9 +1,9 @@
 import { App } from './App';
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent, act, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 describe('App', () => {
-  let app: any;
+  let app: RenderResult;
 
   beforeEach(() => {
     jest.useFakeTimers();
@@ -24,7 +24,7 @@ describe('App', () => {
     fireEvent.change(app.getByPlaceholderText('Your new name'), {
       target: { value: 'NewName' },
     });
-    fireEvent.click(app.getByText('Change').parentNode);
+    fireEvent.click(app.getByText('Change'));
     expect(app.getByTestId('greetings')).toHaveTextContent('Hello, NewName!');
   });
 

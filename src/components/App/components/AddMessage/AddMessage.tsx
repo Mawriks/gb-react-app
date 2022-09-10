@@ -8,34 +8,31 @@ interface AddMessageProps {
   author: string;
 }
 
-interface FormData {
-  message: { value: string };
-}
-
 export const AddMessage: FC<AddMessageProps> = ({ messageSetter, author }) => {
   const [error, setError] = useState(false);
+  const [messageVar, setMessageVar] = useState('');
 
   const errorChange = (state: boolean) => {
     setError(state);
   };
 
-  const handleChange = () => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessageVar(e.currentTarget.value);
     setError(false);
   };
 
   const addMessageHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { message } = e.target as typeof e.target & FormData;
-    if (message.value) {
-      messageSetter(message.value, author);
+    if (messageVar) {
+      messageSetter(messageVar, author);
     } else {
       errorChange(true);
     }
-    message.value = '';
+    setMessageVar('');
   };
 
   return (
-    <form data-testid="addmessage" onSubmit={addMessageHandler}>
+    <form onSubmit={addMessageHandler}>
       <h3>Hey, send your message!</h3>
       <TextField
         autoFocus
@@ -46,13 +43,20 @@ export const AddMessage: FC<AddMessageProps> = ({ messageSetter, author }) => {
         helperText={error ? nameError : false}
         id="filled-basic"
         label="Message"
+        value={messageVar}
         color="primary"
         name="message"
         variant="filled"
         placeholder="Type your message"
         onChange={handleChange}
       />
-      <Button type="submit" variant="contained" size="large" color="default">
+      <Button
+        data-testid="addmessage"
+        type="submit"
+        variant="contained"
+        size="large"
+        color="default"
+      >
         Send
       </Button>
     </form>

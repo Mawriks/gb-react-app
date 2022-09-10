@@ -8,30 +8,27 @@ interface ChangeNameProps {
   nameSetter: (name: string) => void;
 }
 
-interface FormData {
-  name: { value: string };
-}
-
 export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
   const [error, setError] = useState(false);
+  const [nameVar, setNameVar] = useState('');
 
   const errorChange = (state: boolean) => {
     setError(state);
   };
 
-  const handleChange = () => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNameVar(e.currentTarget.value);
     setError(false);
   };
 
   const changeNameHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { name } = e.target as typeof e.target & FormData;
-    if (name.value) {
-      nameSetter(name.value);
+    if (nameVar) {
+      nameSetter(nameVar);
     } else {
       errorChange(true);
     }
-    name.value = '';
+    setNameVar('');
   };
 
   return (
@@ -44,6 +41,7 @@ export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
         helperText={error ? nameError : false}
         id="filled-basic"
         label="Name"
+        value={nameVar}
         color="primary"
         name="name"
         variant="filled"
