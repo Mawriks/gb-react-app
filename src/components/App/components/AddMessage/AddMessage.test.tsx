@@ -2,7 +2,7 @@ import { AddMessage } from './AddMessage';
 import { render, fireEvent } from '@testing-library/react';
 
 describe('AddMessage', () => {
-  let app, setterMessage;
+  let app: any, setterMessage: jest.Mock;
 
   beforeEach(() => {
     setterMessage = jest.fn();

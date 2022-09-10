@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export function Time() {
-  const [timer, setTime] = useState(new Date());
+  const [timer, setTime] = useState<Date>(new Date());
 
   useEffect(() => {
     const id = setInterval(() => {

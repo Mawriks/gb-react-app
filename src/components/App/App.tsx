@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { AddMessage } from './components/AddMessage';
 import { ChangeMode } from './components/ChangeMode';
 import { ChangeName } from './components/ChangeName';
@@ -8,10 +8,11 @@ import { MessagesList } from './components/MessagesList';
 import './App.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Grid, Container, ListItem, List } from '@mui/material';
+import { Messages, Chats } from 'src/types';
 
 const theme = createTheme({
   palette: {
-    dark: {
+    primary: {
       main: '#fff',
       contrastText: '#000',
     },
@@ -20,17 +21,17 @@ const theme = createTheme({
 
 const botAnswer = 'Hey, my name is Bot! I can type this message!';
 
-export function App() {
-  const [name, setName] = useState('Max');
-  const [mode, setMode] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [chats] = useState([
-    { name: 'EL', id: Date.now() },
-    { name: 'EL2', id: Date.now() + 10 },
-    { name: 'EL2', id: Date.now() + 20 },
+export const App: FC = () => {
+  const [name, setName] = useState<string>('Max');
+  const [mode, setMode] = useState<boolean>(false);
+  const [messages, setMessages] = useState<Messages>([]);
+  const [chats] = useState<Chats>([
+    { name: 'EL', id: 1 },
+    { name: 'EL2', id: 2 },
+    { name: 'EL2', id: 3 },
   ]);
 
-  const changeName = (name) => {
+  const changeName = (name: string) => {
     setName(name);
   };
 
@@ -38,7 +39,7 @@ export function App() {
     setMode((prev) => !prev);
   };
 
-  const addMessage = (message, name) => {
+  const addMessage = (message: string, name: string) => {
     setMessages((messagesPrev) => [
       ...messagesPrev,
       { author: name, text: message },
@@ -46,7 +47,7 @@ export function App() {
   };
 
   useEffect(() => {
-    let id;
+    let id: NodeJS.Timeout;
     if (messages.length > 0 && messages[messages.length - 1].author === name) {
       id = setTimeout(() => {
         addMessage(botAnswer, 'Bot');
@@ -95,4 +96,4 @@ export function App() {
       </div>
     </ThemeProvider>
   );
-}
+};

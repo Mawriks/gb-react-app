@@ -2,11 +2,15 @@ import { TextField, Button } from '@material-ui/core';
 import React, { FC } from 'react';
 import { useState } from 'react';
 
-interface ChangeNameProps{
-  nameSetter: any
+const nameError = 'Fill the name field!';
+
+interface ChangeNameProps {
+  nameSetter: (name: string) => void;
 }
 
-const nameError:string = 'Fill the name field!';
+interface FormData {
+  name: { value: string };
+}
 
 export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
   const [error, setError] = useState(false);
@@ -21,8 +25,7 @@ export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
 
   const changeNameHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.dir(e);
-    const { name } = e.target.elements;
+    const { name } = e.target as typeof e.target & FormData;
     if (name.value) {
       nameSetter(name.value);
     } else {
@@ -47,9 +50,15 @@ export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
         placeholder="Your new name"
         onChange={handleChange}
       />
-      <Button type="submit" variant="contained" size="large" color="default">
+      <Button
+        data-testid="mui-btn"
+        type="submit"
+        variant="contained"
+        size="large"
+        color="default"
+      >
         Change
       </Button>
     </form>
   );
-}
+};

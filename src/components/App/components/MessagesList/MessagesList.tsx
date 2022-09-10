@@ -1,12 +1,8 @@
-import { FC } from "react";
-
-interface Message{
-  author: string;
-  text: string;
-}
+import { FC } from 'react';
+import { Messages } from 'src/types';
 
 interface MessageListProps {
-  messageList: Message[]
+  messageList: Messages;
 }
 
 export const MessagesList: FC<MessageListProps> = ({ messageList }) => (

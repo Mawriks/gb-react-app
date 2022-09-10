@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 interface ChangeModeProps {
   mode: boolean;
-  modeSetter: any;
+  modeSetter: () => void;
 }
 
 export const ChangeMode: FC<ChangeModeProps> = ({ mode, modeSetter }) => {

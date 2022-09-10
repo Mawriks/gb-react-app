@@ -1,11 +1,21 @@
 import { TextField, Button } from '@material-ui/core';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 
 const nameError = 'Please type your message!';
 
-export function AddMessage({ messageSetter, author }) {
+interface AddMessageProps {
+  messageSetter: (mes: string, auth: string) => void;
+  author: string;
+}
+
+interface FormData {
+  message: { value: string };
+}
+
+export const AddMessage: FC<AddMessageProps> = ({ messageSetter, author }) => {
   const [error, setError] = useState(false);
-  const errorChange = (state) => {
+
+  const errorChange = (state: boolean) => {
     setError(state);
   };
 
@@ -13,9 +23,9 @@ export function AddMessage({ messageSetter, author }) {
     setError(false);
   };
 
-  const addMessageHandler = (e) => {
+  const addMessageHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { message } = e.target.elements;
+    const { message } = e.target as typeof e.target & FormData;
     if (message.value) {
       messageSetter(message.value, author);
     } else {
@@ -47,4 +57,4 @@ export function AddMessage({ messageSetter, author }) {
       </Button>
     </form>
   );
-}
+};

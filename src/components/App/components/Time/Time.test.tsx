@@ -11,7 +11,7 @@ describe('Time', () => {
   });
   it('expect to changing time from current to current+100ms|current+1s and current+5s', () => {
     const { container } = render(<Time />);
-    let time = new Date();
+    const time = new Date();
     expect(container).toHaveTextContent(
       `Current time - ${time.toLocaleTimeString()}`
     );
