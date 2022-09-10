@@ -17,9 +17,9 @@ describe('App', () => {
   });
 
   it('App testing changeMode', () => {
-    expect(app.getByTestId('app')).toHaveClass('app-dark');
-    fireEvent.click(app.getByTestId('btn'));
     expect(app.getByTestId('app')).toHaveClass('app-light');
+    fireEvent.click(app.getByTestId('btn'));
+    expect(app.getByTestId('app')).toHaveClass('app-dark');
   });
 
   it('App testing changeName funct', () => {

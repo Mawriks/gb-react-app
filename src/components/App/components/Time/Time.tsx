@@ -10,5 +10,10 @@ export function Time() {
     return () => clearInterval(id);
   }, []);
 
-  return <div>Current time - {timer.toLocaleTimeString()}</div>;
+  return (
+    <div>
+      <br />
+      Current time - {timer.toLocaleTimeString()}
+    </div>
+  );
 }

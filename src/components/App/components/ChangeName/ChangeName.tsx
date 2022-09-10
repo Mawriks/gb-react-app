@@ -1,11 +1,17 @@
 import { TextField, Button } from '@material-ui/core';
+import React, { FC } from 'react';
 import { useState } from 'react';
 
-const nameError = 'Please type your message!';
+interface ChangeNameProps{
+  nameSetter: any
+}
 
-export function AddMessage({ messageSetter, author }) {
+const nameError:string = 'Fill the name field!';
+
+export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
   const [error, setError] = useState(false);
-  const errorChange = (state) => {
+
+  const errorChange = (state: boolean) => {
     setError(state);
   };
 
@@ -13,37 +19,36 @@ export function AddMessage({ messageSetter, author }) {
     setError(false);
   };
 
-  const addMessageHandler = (e) => {
+  const changeNameHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { message } = e.target.elements;
-    if (message.value) {
-      messageSetter(message.value, author);
+    console.dir(e);
+    const { name } = e.target.elements;
+    if (name.value) {
+      nameSetter(name.value);
     } else {
       errorChange(true);
     }
-    message.value = '';
+    name.value = '';
   };
 
   return (
-    <form data-testid="addmessage" onSubmit={addMessageHandler}>
-      <h3>Hey, send your message!</h3>
+    <form data-testid="form" onSubmit={changeNameHandler}>
+      <h3>Whant to change your name?</h3>
       <TextField
-        autoFocus
         InputLabelProps={{ shrink: true }}
         size="small"
-        inputRef={(input) => input?.focus()}
         error={error}
         helperText={error ? nameError : false}
         id="filled-basic"
-        label="Message"
+        label="Name"
         color="primary"
-        name="message"
+        name="name"
         variant="filled"
-        placeholder="Type your message"
+        placeholder="Your new name"
         onChange={handleChange}
       />
       <Button type="submit" variant="contained" size="large" color="default">
-        Send
+        Change
       </Button>
     </form>
   );
