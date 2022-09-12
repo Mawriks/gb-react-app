@@ -1,4 +1,4 @@
-import { AddMessage } from './AddMessage';
+/* import { AddMessage } from './AddMessage';
 import { render, fireEvent, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -44,3 +44,4 @@ describe('AddMessage', () => {
     expect(app.queryByText('Please type your message!')).not.toBeInTheDocument;
   });
 });
+ */
