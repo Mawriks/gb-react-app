@@ -1,4 +1,4 @@
-/* import { App } from './App';
+import { App } from './App';
 import { render, fireEvent, act, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -15,11 +15,12 @@ describe('App', () => {
   });
 
   it('App testing changeMode', () => {
-    expect(app.getByTestId('app')).toHaveClass('app-light');
+    app = render(<App />);
+    /*  expect(app.getByTestId('app')).toHaveClass('app-light');
     fireEvent.click(app.getByTestId('btn'));
-    expect(app.getByTestId('app')).toHaveClass('app-dark');
+    expect(app.getByTestId('app')).toHaveClass('app-dark'); */
   });
-
+  /*
   it('App testing changeName funct', () => {
     fireEvent.change(app.getByPlaceholderText('Your new name'), {
       target: { value: 'NewName' },
@@ -62,6 +63,5 @@ describe('App', () => {
     expect(app.getByTestId('messagelist')).toContainHTML(
       '<ul data-testid="messagelist"><li>Max: message</li><li>Bot: Hey, my name is Bot! I can type this message!</li><li>Max: message</li><li>Max: message</li><li>Bot: Hey, my name is Bot! I can type this message!</li></ul>'
     );
-  });
+  }); */
 });
- */
