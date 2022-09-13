@@ -1,21 +1,19 @@
 import { App } from './App';
-import { render, fireEvent, act, RenderResult } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 describe('App', () => {
-  let app: RenderResult;
-
-  beforeEach(() => {
+  /*   beforeEach(() => {
     jest.useFakeTimers();
-    app = render(<App />);
-  });
+    let app = render(<App />);
+  }); */
 
   afterEach(() => {
     jest.useRealTimers();
   });
 
   it('App testing changeMode', () => {
-    app = render(<App />);
+    render(<App />);
     /*  expect(app.getByTestId('app')).toHaveClass('app-light');
     fireEvent.click(app.getByTestId('btn'));
     expect(app.getByTestId('app')).toHaveClass('app-dark'); */
