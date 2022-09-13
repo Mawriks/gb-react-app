@@ -1,14 +1,20 @@
 import { TextField, Button } from '@material-ui/core';
 import { FC, useState } from 'react';
+import { Message } from 'src/types';
 
 const nameError = 'Please type your message!';
 
 interface AddMessageProps {
-  messageSetter: (mes: string, auth: string) => void;
+  chatId: string;
+  messageSetter: (chatId: string, mes: Message) => void;
   author: string;
 }
 
-export const AddMessage: FC<AddMessageProps> = ({ messageSetter, author }) => {
+export const AddMessage: FC<AddMessageProps> = ({
+  chatId,
+  messageSetter,
+  author,
+}) => {
   const [error, setError] = useState(false);
   const [messageVar, setMessageVar] = useState('');
 
@@ -23,8 +29,8 @@ export const AddMessage: FC<AddMessageProps> = ({ messageSetter, author }) => {
 
   const addMessageHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (messageVar) {
-      messageSetter(messageVar, author);
+    if (messageVar && chatId) {
+      messageSetter(chatId, { text: messageVar, author: author });
     } else {
       errorChange(true);
     }

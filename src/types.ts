@@ -3,7 +3,7 @@ export interface Message {
   text: string;
 }
 
-export type Messages = Message[];
+export type Messages = Record<string, Message[]>;
 
 export interface Chat {
   id: string | number;
