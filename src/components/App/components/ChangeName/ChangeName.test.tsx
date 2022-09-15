@@ -7,7 +7,7 @@ describe('ChangeName', () => {
 
   beforeEach(() => {
     setterName = jest.fn();
-    app = render(<ChangeName nameSetter={setterName} />);
+    app = render(<ChangeName />);
   });
 
   it('expect setterName call', () => {

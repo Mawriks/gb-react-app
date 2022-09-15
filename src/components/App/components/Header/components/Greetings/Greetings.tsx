@@ -4,11 +4,13 @@ interface GreetingsProps {
   name: string;
 }
 
-export const Greetings: FC<GreetingsProps> = ({ name }) => (
-  <h3
-    data-testid="greetings"
-    style={{ backgroundColor: '#ddd', color: '#000' }}
-  >
-    Hello, {name}!
-  </h3>
-);
+export const Greetings: FC<GreetingsProps> = ({ name }) => {
+  return (
+    <h3
+      data-testid="greetings"
+      style={{ backgroundColor: '#ddd', color: '#000' }}
+    >
+      Hello, {name}!
+    </h3>
+  );
+};
