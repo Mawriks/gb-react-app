@@ -7,6 +7,9 @@ import { Profile } from 'src/pages/Profile';
 import { Main } from 'src/pages/Main';
 import { ChatPage } from 'src/pages/ChatPage';
 import { Header } from './components/Header';
+import { ThemeContext } from 'src/utils/ThemeContext';
+import { ProfileState } from 'src/store/profile/reducer';
+import { useSelector } from 'react-redux';
 
 const defaultChats: Chat[] = [
   {
@@ -35,7 +38,12 @@ const defaultMessages: Messages = {
 export const App: FC = () => {
   const [chats, setChats] = useState<Chats>(defaultChats);
   const [messages, setMessages] = useState<Messages>(defaultMessages);
-  const [name] = useState('User');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const name = useSelector((state: ProfileState) => state.name);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   const onAddChat = (newChat: Chat) => {
     setChats([...chats, newChat]);
@@ -60,37 +68,39 @@ export const App: FC = () => {
   };
 
   return (
-    <Routes>
-      <Route path="/" element={<Header name={name} />}>
-        <Route index element={<Main />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="chats">
-          <Route
-            index
-            element={
-              <ChatList
-                chats={chats}
-                chatSetter={onAddChat}
-                chatRemover={onRemoveChat}
-              />
-            }
-          />
-          <Route
-            path=":chatId"
-            element={
-              <ChatPage
-                chats={chats}
-                chatSetter={onAddChat}
-                messages={messages}
-                addMessage={addMessage}
-                name={name}
-                chatRemover={onRemoveChat}
-              />
-            }
-          />
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <Routes>
+        <Route path="/" element={<Header name={name} />}>
+          <Route index element={<Main />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="chats">
+            <Route
+              index
+              element={
+                <ChatList
+                  chats={chats}
+                  chatSetter={onAddChat}
+                  chatRemover={onRemoveChat}
+                />
+              }
+            />
+            <Route
+              path=":chatId"
+              element={
+                <ChatPage
+                  chats={chats}
+                  chatSetter={onAddChat}
+                  messages={messages}
+                  addMessage={addMessage}
+                  name={name}
+                  chatRemover={onRemoveChat}
+                />
+              }
+            />
+          </Route>
+          <Route path="*" element={<h2>404 page</h2>}></Route>
         </Route>
-        <Route path="*" element={<h2>404 page</h2>}></Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </ThemeContext.Provider>
   );
 };

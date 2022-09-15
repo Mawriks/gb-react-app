@@ -1,16 +1,14 @@
 import { TextField, Button } from '@material-ui/core';
-import React, { FC } from 'react';
-import { useState } from 'react';
+import React, { FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { changeProfileName } from 'src/store/profile/actions';
 
 const nameError = 'Fill the name field!';
 
-interface ChangeNameProps {
-  nameSetter: (name: string) => void;
-}
-
-export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
-  const [error, setError] = useState(false);
-  const [nameVar, setNameVar] = useState('');
+export const ChangeName: FC = () => {
+  const dispatch = useDispatch();
+  const [error, setError] = useState<boolean>(false);
+  const [nameVar, setNameVar] = useState<string>('');
 
   const errorChange = (state: boolean) => {
     setError(state);
@@ -24,7 +22,7 @@ export const ChangeName: FC<ChangeNameProps> = ({ nameSetter }) => {
   const changeNameHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (nameVar) {
-      nameSetter(nameVar);
+      dispatch(changeProfileName(nameVar));
     } else {
       errorChange(true);
     }
