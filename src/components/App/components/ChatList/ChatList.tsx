@@ -1,20 +1,17 @@
 import { FC } from 'react';
-import { Chat, Chats } from 'src/types';
 import { CreateChat } from './components/CreateChat';
 import { NavLink } from 'react-router-dom';
 import ChatListCSS from './ChatList.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteChat } from 'src/store/messages/actions';
+import { selectChats } from 'src/store/messages/selectors';
 
-interface ChatListProps {
-  chats: Chats;
-  chatSetter: (chat: Chat) => void;
-  chatRemover: (chatId: string | number) => void;
-}
-
-export const ChatList: FC<ChatListProps> = ({
-  chats,
-  chatSetter,
-  chatRemover,
-}) => {
+export const ChatList: FC = () => {
+  const dispatch = useDispatch();
+  const chats = useSelector(
+    selectChats,
+    (prev, next) => prev.length === next.length
+  );
   return (
     <div>
       <ul>
@@ -24,15 +21,17 @@ export const ChatList: FC<ChatListProps> = ({
               className={({ isActive }) =>
                 isActive ? ChatListCSS.activeLink : ''
               }
-              to={`/chats/${chat.id}`}
+              to={`/chats/${chat.name}`}
             >
               {chat.name}
             </NavLink>
-            <button onClick={() => chatRemover(chat.id)}>remove</button>
+            <button onClick={() => dispatch(deleteChat(chat.name))}>
+              remove
+            </button>
           </li>
         ))}
       </ul>
-      <CreateChat onAddChat={chatSetter} />
+      <CreateChat />
     </div>
   );
 };

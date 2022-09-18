@@ -1,3 +1,4 @@
+import { Reducer } from 'redux';
 import { CHANGE_PROFILE_NAME, TOGGLE_PROFILE_VISIBLE } from './actions';
 import { ProfileActions } from './types';
 
@@ -11,9 +12,9 @@ const initialState: ProfileState = {
   visible: true,
 };
 
-export const profileReducer = (
+export const profileReducer: Reducer<ProfileState, ProfileActions> = (
   state = initialState,
-  action: ProfileActions
+  action
 ) => {
   switch (action.type) {
     case TOGGLE_PROFILE_VISIBLE: {

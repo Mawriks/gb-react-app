@@ -1,22 +1,18 @@
 import { TextField, Button } from '@material-ui/core';
 import { FC, useState } from 'react';
-import { Message } from 'src/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { addMessage } from 'src/store/messages/actions';
+import { selectName } from 'src/store/profile/selectors';
 
 const nameError = 'Please type your message!';
 
-interface AddMessageProps {
-  chatId: string;
-  messageSetter: (chatId: string, mes: Message) => void;
-  author: string;
-}
-
-export const AddMessage: FC<AddMessageProps> = ({
-  chatId,
-  messageSetter,
-  author,
-}) => {
+export const AddMessage: FC = () => {
+  const author = useSelector(selectName);
+  const { chatId } = useParams();
   const [error, setError] = useState(false);
   const [messageVar, setMessageVar] = useState('');
+  const dispatch = useDispatch();
 
   const errorChange = (state: boolean) => {
     setError(state);
@@ -30,7 +26,7 @@ export const AddMessage: FC<AddMessageProps> = ({
   const addMessageHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (messageVar && chatId) {
-      messageSetter(chatId, { text: messageVar, author: author });
+      dispatch(addMessage(chatId, { text: messageVar, author: author }));
     } else {
       errorChange(true);
     }
