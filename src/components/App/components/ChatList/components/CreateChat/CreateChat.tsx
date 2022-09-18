@@ -1,20 +1,15 @@
 import React, { FC, useState } from 'react';
-import { Chat } from 'src/types';
+import { useDispatch } from 'react-redux';
+import { addChat } from 'src/store/messages/actions';
 
-interface CreateChatProps {
-  onAddChat: (chat: Chat) => void;
-}
-
-export const CreateChat: FC<CreateChatProps> = ({ onAddChat }) => {
+export const CreateChat: FC = () => {
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value) {
-      onAddChat({
-        id: new Date().valueOf(),
-        name: value,
-      });
+      dispatch(addChat(value));
       setValue('');
     }
   };
