@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { toggleProfileVisible } from 'src/store/profile/actions';
+import { toggleProfileVisible } from 'src/store/profile/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChangeName } from 'src/components/App/components/ChangeName';
 import { selectName, selectVisible } from 'src/store/profile/selectors';

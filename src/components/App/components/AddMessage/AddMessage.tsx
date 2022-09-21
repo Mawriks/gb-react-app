@@ -2,17 +2,20 @@ import { TextField, Button } from '@material-ui/core';
 import { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addMessage } from 'src/store/messages/actions';
+import { ThunkDispatch } from 'redux-thunk';
+import { StoreState } from 'src/store';
+import { addMessageWithReply } from 'src/store/messages/actions';
+import { AddMessage } from 'src/store/messages/types';
 import { selectName } from 'src/store/profile/selectors';
 
 const nameError = 'Please type your message!';
 
-export const AddMessage: FC = () => {
+export const AddMessageFunc: FC = () => {
   const author = useSelector(selectName);
   const { chatId } = useParams();
   const [error, setError] = useState(false);
   const [messageVar, setMessageVar] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<StoreState, void, AddMessage>>();
 
   const errorChange = (state: boolean) => {
     setError(state);
@@ -26,7 +29,9 @@ export const AddMessage: FC = () => {
   const addMessageHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (messageVar && chatId) {
-      dispatch(addMessage(chatId, { text: messageVar, author: author }));
+      dispatch(
+        addMessageWithReply(chatId, { text: messageVar, author: author })
+      );
     } else {
       errorChange(true);
     }

@@ -1,7 +1,7 @@
 import { TextField, Button } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeProfileName } from 'src/store/profile/actions';
+import { changeProfileName } from 'src/store/profile/slice';
 
 const nameError = 'Fill the name field!';
 
