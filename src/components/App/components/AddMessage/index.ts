@@ -1,0 +1,1 @@
+export { AddMessageFunc } from './AddMessage';
