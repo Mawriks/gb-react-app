@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addChat } from 'src/store/messages/actions';
+import { addChat } from 'src/store/messages/slice';
 
 export const CreateChat: FC = () => {
   const [value, setValue] = useState('');

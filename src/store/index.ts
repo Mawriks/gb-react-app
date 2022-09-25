@@ -9,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import { messagesReducer } from './messages/reducer';
+import { messagesReducer } from './messages/slice';
 import { profileReducer } from './profile/slice';
 import storage from 'redux-persist/lib/storage';
 
@@ -38,4 +38,8 @@ export const store = configureStore({
       },
     }),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
 export const persistor = persistStore(store);
