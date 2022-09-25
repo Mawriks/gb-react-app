@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState = {
   name: 'User',
   visible: true,
+  isAuth: false,
 };
 
 const profileSlice = createSlice({
@@ -15,8 +16,12 @@ const profileSlice = createSlice({
     changeProfileName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
+    auth: (state, action: PayloadAction<boolean>) => {
+      state.isAuth = action.payload;
+    },
   },
 });
 
-export const { toggleProfileVisible, changeProfileName } = profileSlice.actions;
+export const { toggleProfileVisible, changeProfileName, auth } =
+  profileSlice.actions;
 export const profileReducer = profileSlice.reducer;

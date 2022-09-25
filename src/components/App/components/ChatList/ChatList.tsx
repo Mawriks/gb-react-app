@@ -3,7 +3,7 @@ import { CreateChat } from './components/CreateChat';
 import { NavLink } from 'react-router-dom';
 import ChatListCSS from './ChatList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteChat } from 'src/store/messages/actions';
+import { deleteChat } from 'src/store/messages/slice';
 import { selectChats } from 'src/store/messages/selectors';
 
 export const ChatList: FC = () => {

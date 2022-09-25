@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 import { StoreState } from 'src/store';
-import { addMessageWithReply } from 'src/store/messages/actions';
-import { AddMessage } from 'src/store/messages/types';
+import { addMessageWithReply } from 'src/store/messages/slice';
 import { selectName } from 'src/store/profile/selectors';
 
 const nameError = 'Please type your message!';
@@ -15,7 +14,7 @@ export const AddMessageFunc: FC = () => {
   const { chatId } = useParams();
   const [error, setError] = useState(false);
   const [messageVar, setMessageVar] = useState('');
-  const dispatch = useDispatch<ThunkDispatch<StoreState, void, AddMessage>>();
+  const dispatch = useDispatch<ThunkDispatch<StoreState, void, any>>();
 
   const errorChange = (state: boolean) => {
     setError(state);
@@ -30,7 +29,10 @@ export const AddMessageFunc: FC = () => {
     e.preventDefault();
     if (messageVar && chatId) {
       dispatch(
-        addMessageWithReply(chatId, { text: messageVar, author: author })
+        addMessageWithReply({
+          chatName: chatId,
+          newMessage: { text: messageVar, author: author },
+        })
       );
     } else {
       errorChange(true);
