@@ -1,23 +1,30 @@
+import { CircularProgress } from '@mui/material';
 import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { auth } from 'src/store/profile/slice';
+import { logIn } from 'src/services/firebase';
 
 export const SignIn: FC = () => {
   const [login, setLogin] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(false);
-    if (login === 'gb' && password === 'gb') {
-      dispatch(auth(true));
+    setError('');
+    try {
+      setLoading(true);
+      await logIn(login, password);
       navigate('/chats');
-    } else {
-      setError(true);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Error');
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -28,7 +35,8 @@ export const SignIn: FC = () => {
         <label htmlFor="text">Login:</label>
         <br />
         <input
-          type="text"
+          type="email"
+          required
           onChange={(e) => setLogin(e.target.value)}
           value={login}
           name="text"
@@ -41,6 +49,12 @@ export const SignIn: FC = () => {
         <input
           type="password"
           name="password"
+          pattern="[a-zA-Z0-9]{6,}"
+          onInvalid={(e) =>
+            (e.target as HTMLInputElement).setCustomValidity(
+              'Min length of password equal to 6'
+            )
+          }
           onChange={(e) => setPassword(e.target.value)}
           value={password}
           id="password"
@@ -49,7 +63,8 @@ export const SignIn: FC = () => {
         <br />
         <button type="submit">Login</button>
       </form>
-      {error && <p style={{ color: 'red' }}>Uncorrect login or password</p>}
+      {loading && <CircularProgress />}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </>
   );
 };

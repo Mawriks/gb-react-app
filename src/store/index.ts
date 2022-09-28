@@ -12,24 +12,26 @@ import {
 import { messagesReducer } from './messages/slice';
 import { profileReducer } from './profile/slice';
 import storage from 'redux-persist/lib/storage';
+import { articlesReducer } from './articles/slice';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: [],
-};
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+//   blacklist: ['articles', 'profile'],
+// };
 
 const rootReducer = combineReducers({
   profile: profileReducer,
   messages: messagesReducer,
+  articles: articlesReducer,
 });
 
-const persistredReducer = persistReducer(persistConfig, rootReducer);
+// const persistredReducer = persistReducer(persistConfig, rootReducer);
 
 export type StoreState = ReturnType<typeof rootReducer>;
 
 export const store = configureStore({
-  reducer: persistredReducer,
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -42,4 +44,4 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);

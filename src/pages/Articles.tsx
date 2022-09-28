@@ -1,47 +1,29 @@
-import { FC, useEffect, useState } from 'react';
-import { api } from 'src/constants';
-
-interface Article {
-  id: string;
-  title: string;
-  summary: string;
-}
+import { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { StoreState } from 'src/store';
+import { fetchArticles } from 'src/store/articles/slice';
 
 export const Articles: FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [error, setError] = useState<string>('');
+  const loading = useSelector((state: StoreState) => state.articles.loading);
+  const articles = useSelector((state: StoreState) => state.articles.articles);
+  const error = useSelector((state: StoreState) => state.articles.error);
+
+  const fetchDispatch = useDispatch<ThunkDispatch<StoreState, void, any>>();
+
+  const handleFetchArticles = () => {
+    fetchDispatch(fetchArticles());
+  };
 
   useEffect(() => {
-    fetchArticles();
+    handleFetchArticles();
   }, []);
-
-  const fetchArticles = async () => {
-    setLoading(true);
-    setError('');
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    try {
-      const res = await fetch(`${api}/v3/articles`);
-      const data: Article[] = await res.json();
-      setArticles(data);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('ERROR');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <>
       <h2>Articles Page</h2>
       {loading && <div>Loading...</div>}
-      <button onClick={fetchArticles}>reload</button>
+      <button onClick={() => handleFetchArticles()}>reload</button>
       <ul>
         {articles.map((item) => {
           return (

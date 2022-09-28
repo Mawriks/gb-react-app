@@ -1,15 +1,20 @@
+import { ref, set } from 'firebase/database';
 import React, { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addChat } from 'src/store/messages/slice';
+import { db } from 'src/services/firebase';
 
 export const CreateChat: FC = () => {
   const [value, setValue] = useState('');
-  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value) {
-      dispatch(addChat(value));
+      set(ref(db, `chats/${value}`), {
+        id: Date.now(),
+        name: value,
+      });
+      set(ref(db, `messages/${value}`), {
+        name: value,
+      });
       setValue('');
     }
   };
