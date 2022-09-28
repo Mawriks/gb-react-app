@@ -1,8 +1,10 @@
 import { TextField, Button } from '@material-ui/core';
+import { push, ref } from 'firebase/database';
 import { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
+import { db } from 'src/services/firebase';
 import { StoreState } from 'src/store';
 import { addMessageWithReply } from 'src/store/messages/slice';
 import { selectName } from 'src/store/profile/selectors';
@@ -28,12 +30,16 @@ export const AddMessageFunc: FC = () => {
   const addMessageHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (messageVar && chatId) {
-      dispatch(
-        addMessageWithReply({
-          chatName: chatId,
-          newMessage: { text: messageVar, author: author },
-        })
-      );
+      // dispatch(
+      //   addMessageWithReply({
+      //     chatName: chatId,
+      //     newMessage: { text: messageVar, author: author },
+      //   })
+      // );
+      push(ref(db, `messages/${chatId}/messages`), {
+        text: messageVar,
+        author: author,
+      });
     } else {
       errorChange(true);
     }

@@ -5,9 +5,9 @@ interface MessageListProps {
   messageList: Message[];
 }
 
-export const MessagesList: FC<MessageListProps> = ({ messageList }) => (
+export const MessagesList: FC<any> = ({ messageList }) => (
   <ul data-testid="messagelist">
-    {messageList.map((message, index) => (
+    {messageList.map((message: any, index: any) => (
       <li key={index}>
         {message.author}: {message.text}
       </li>

@@ -9,6 +9,7 @@ import { selectName } from 'src/store/profile/selectors';
 import { Wrapper, Title } from './styled';
 import { StoreState } from 'src/store';
 import { auth } from 'src/store/profile/slice';
+import { logOut } from 'src/services/firebase';
 
 const nav = [
   { name: 'Main', path: '/' },
@@ -24,8 +25,8 @@ export const Header: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(auth(false));
+  const handleLogout = async () => {
+    await logOut();
   };
   const handleLogin = () => {
     navigate('/signin');
@@ -59,7 +60,11 @@ export const Header: FC = () => {
         {isAuth ? (
           <button onClick={handleLogout}>Logout</button>
         ) : (
-          <button onClick={handleLogin}>Login</button>
+          <>
+            <button onClick={handleLogin}>Login</button>
+            <br />
+            <button onClick={() => navigate('/signup')}>Sign Up</button>
+          </>
         )}
         <Outlet />
       </main>
